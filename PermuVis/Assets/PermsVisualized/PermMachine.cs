@@ -82,7 +82,6 @@ namespace Roundbeargames
                     // yes: move fixer, reset selectors, and repeat
                     ResetSelectors();
                 }
-                // if not, end loop
                 else
                 {
                     break;
@@ -98,6 +97,7 @@ namespace Roundbeargames
             {
                 string combination = string.Empty;
 
+                // print each item selected
                 for (int i = 0; i < rows.Count; i++)
                 {
                     combination += rows[i].selector.VALUE + " ";
@@ -108,8 +108,10 @@ namespace Roundbeargames
 
                 Row bottomRow = rows[rows.Count - 1];
 
+                // can one selector move right? (bottom)
                 if (bottomRow.SelectorCanMoveRight())
                 {
+                    // move one selector and repeat
                     bottomRow.selector.MoveIndexRight();
                 }
                 else
