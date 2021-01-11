@@ -6,7 +6,6 @@ namespace Roundbeargames
     [System.Serializable]
     public class Row
     {
-        public int ID = 0;
         public List<int> listInts = new List<int>();
         public Selector selector;
 

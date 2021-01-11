@@ -6,54 +6,70 @@ namespace Roundbeargames
 {
     public class GameLogic : MonoBehaviour
     {
-        [SerializeField]
-        private List<Row> RowsList = new List<Row>();
+        [SerializeField] List<Row> RowsList = new List<Row>();
         PermMachine permMachine = new PermMachine();
 
-        private void Start()
+        void Start()
         {
             Run();
-            StartGraphics();
         }
 
-        public int ROW_COUNT
+        public void Run()
+        {
+            UIController uiController = FindObjectOfType<UIController>();
+
+            // rows auto setup
+            for (int i = 0; i < uiController.TOTAL_ROWS; i++)
+            {
+                CreateRow(uiController.ITEMS_PER_ROW);
+            }
+
+            // rows manual setup
+            /*
+            Row r0 = new Row();
+            r0.listInts.Add(1);
+            r0.listInts.Add(2);
+            r0.listInts.Add(3);
+
+            Row r1 = new Row();
+            r1.listInts.Add(4);
+
+            Row r2 = new Row();
+            r2.listInts.Add(5);
+            r2.listInts.Add(6);
+
+            RowsList.Add(r0);
+            RowsList.Add(r1);
+            RowsList.Add(r2);
+            */
+
+            uiController.SetupGraphics(this);
+            permMachine.PrintAll(RowsList);
+        }
+
+        void CreateRow(int nItemCount)
+        {
+            Row row = new Row();
+
+            for (int i = 0; i < nItemCount; i++)
+            {
+                row.listInts.Add(i);
+            }
+
+            RowsList.Add(row);
+        }
+
+        public Row GetRow(int index)
+        {
+            return RowsList[index];
+        }
+
+        public int TOTAL_ROWS
         {
             get
             {
                 return RowsList.Count;
             }
-        }
-
-        public void Run()
-        {
-            Debugger.Log("game logic started");
-
-            RowsList.Clear();
-
-            Row r0 = new Row(6); r0.ID = 0;
-            Row r1 = new Row(6); r1.ID = 1;
-            Row r2 = new Row(6); r2.ID = 2;
-            Row r3 = new Row(6); r3.ID = 3;
-            Row r4 = new Row(6); r4.ID = 4;
-
-            RowsList.Add(r0);
-            RowsList.Add(r1);
-            RowsList.Add(r2);
-            RowsList.Add(r3);
-            RowsList.Add(r4);
-
-            permMachine.PrintAll(RowsList);
-        }
-
-        public void StartGraphics()
-        {
-            UIController uiController = FindObjectOfType<UIController>();
-            uiController.SetupPermMachine(this);
-        }
-
-        public Row GetItem(int rowIndex)
-        {
-            return RowsList[rowIndex];
         }
     }
 }
