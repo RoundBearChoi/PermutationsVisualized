@@ -348,7 +348,7 @@ MonoBehaviour:
   rowAnchor: {fileID: 1951939228}
   textResult: {fileID: 903932152}
   ItemsPerRow: 5
-  TotalRows: 3
+  TotalRows: 5
   RowIndent: 130
   UpdateDelay: 0.1
   gameLogic: {fileID: 0}
