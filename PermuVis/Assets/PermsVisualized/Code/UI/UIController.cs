@@ -11,10 +11,12 @@ namespace Roundbeargames
         public GameObject SelectorPrefab;
         public GameObject VerticalLinePrefab;
         public RectTransform rowAnchor;
-
-        [SerializeField] int TotalRows = 0;
+        public UnityEngine.UI.Text textResult;
+                
         [SerializeField] int ItemsPerRow = 0;
+        [SerializeField] int TotalRows = 0;
         [SerializeField] float RowIndent = 0f;
+        [SerializeField] [Range(0f, 1f)] float UpdateDelay = 0f;
 
         [Header("---Debug---")]
         [SerializeField] GameLogic gameLogic;
@@ -37,6 +39,14 @@ namespace Roundbeargames
             }
         }
 
+        public float UPDATE_DELAY
+        {
+            get
+            {
+                return UpdateDelay;
+            }
+        }
+
         private void Update()
         {
             if (gameLogic != null)
@@ -50,6 +60,7 @@ namespace Roundbeargames
                         float localX = GetLocalUIXPos(RowUIList[i], totalItems, selection);
 
                         SelectorUIList[i].anchoredPosition = new Vector2(localX, 0f);
+                        textResult.text = gameLogic.PERM_MACHINE.TOTAL_COMBINATIONS.ToString();
                     }
                 }
             }

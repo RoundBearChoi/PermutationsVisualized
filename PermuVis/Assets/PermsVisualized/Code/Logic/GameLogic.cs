@@ -6,8 +6,17 @@ namespace Roundbeargames
 {
     public class GameLogic : MonoBehaviour
     {
+        [Header("Debug")]
         [SerializeField] List<Row> RowsList = new List<Row>();
-        PermMachine permMachine = new PermMachine();
+        [SerializeField] PermMachine permMachine = null;
+
+        public PermMachine PERM_MACHINE
+        {
+            get
+            {
+                return permMachine;
+            }
+        }
 
         void Start()
         {
@@ -44,7 +53,12 @@ namespace Roundbeargames
             */
 
             uiController.SetupGraphics(this);
-            permMachine.PrintAll(RowsList);
+
+            GameObject obj = new GameObject();
+            obj.name = typeof(PermMachine).Name;
+            permMachine = obj.AddComponent(typeof(PermMachine)) as PermMachine;
+
+            permMachine.PrintAll(RowsList, uiController);
         }
 
         void CreateRow(int nItemCount)

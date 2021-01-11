@@ -342,20 +342,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5158a73d229d1d94a84398daa117c9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RowUIElements:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   RowPrefab: {fileID: 2939606854967391792, guid: 73769f8b91ffb074da38db17af5ca985, type: 3}
   SelectorPrefab: {fileID: 3125053871858742005, guid: 3f225c825cad59f4dafca94a9e09b12c, type: 3}
   VerticalLinePrefab: {fileID: 4592789562639958945, guid: f6e662bc667b8af43b723e6f3752d27b, type: 3}
   rowAnchor: {fileID: 1951939228}
-  TotalRows: 5
-  ItemsPerRow: 6
+  textResult: {fileID: 903932152}
+  ItemsPerRow: 5
+  TotalRows: 3
   RowIndent: 130
+  UpdateDelay: 0.1
   gameLogic: {fileID: 0}
+  RowUIList: []
+  SelectorUIList: []
 --- !u!1 &3515197926691272051
 GameObject:
   m_ObjectHideFlags: 0

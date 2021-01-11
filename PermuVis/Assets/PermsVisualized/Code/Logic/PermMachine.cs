@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Roundbeargames
 {
-    public class PermMachine
+    public class PermMachine : MonoBehaviour
     {
         List<Row> rows = null;
         int totalCombinations = 0;
+        UIController uiController = null;
+
+        public int TOTAL_COMBINATIONS
+        {
+            get
+            {
+                return totalCombinations;
+            }
+        }
 
         public bool MoveSelectors()
         {
@@ -30,19 +40,24 @@ namespace Roundbeargames
             return false;
         }
 
-        public void PrintAll(List<Row> targetRows)
+        public void PrintAll(List<Row> targetRows, UIController targetUI)
         {
             rows = targetRows;
+            uiController = targetUI;
+            StartCoroutine(_DelayedUpdate());
+        }
 
-            while(true)
+        IEnumerator _DelayedUpdate()
+        {
+            while (true)
             {
-                PrintCombinations();
+                yield return PrintCombinations();
 
                 // can selector move?
                 // if yes: move selector and stay in loop
                 if (MoveSelectors())
                 {
-                    
+
                 }
                 // if not: end loop
                 else
@@ -54,7 +69,7 @@ namespace Roundbeargames
             Debugger.Log("total combinations: " + totalCombinations);
         }
 
-        private void PrintCombinations()
+        IEnumerator PrintCombinations()
         {
             while (true)
             {
@@ -70,6 +85,9 @@ namespace Roundbeargames
                 totalCombinations++;
 
                 Row bottomRow = rows[rows.Count - 1];
+
+                // delay visualization
+                yield return new WaitForSeconds(uiController.UPDATE_DELAY);
 
                 // can one selector move right? (bottom)
                 if (bottomRow.SelectorCanMoveRight())
