@@ -35,6 +35,34 @@ namespace Roundbeargames
             return false;
         }
 
+        public bool MoveFixer()
+        {
+            if (fixer.x < rows[fixer.rowID].listInts.Count - 1)
+            {
+                fixer.x++;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        void ResetSelectors()
+        {
+            for (int i = 0; i < rows.Count; i++)
+            {
+                if (i != fixer.rowID)
+                {
+                    rows[i].selector.SetIndex(0);
+                }
+                else
+                {
+                    rows[i].selector.SetIndex(fixer.x);
+                }
+            }
+        }
+
         public void PrintAll(List<Row> targetRows)
         {
             rows = targetRows;
@@ -43,14 +71,18 @@ namespace Roundbeargames
             {
                 PrintCombinations();
 
-                // can fixer move?
-                // yes: move fixer
-                // no: end loop
-
+                // can selector move?
                 if (MoveSelectors())
                 {
-
+                    // yes: move selector and repeat
                 }
+                // if not, can fixer move?
+                else if (MoveFixer())
+                {
+                    // yes: move fixer, reset selectors, and repeat
+                    ResetSelectors();
+                }
+                // if not, end loop
                 else
                 {
                     break;

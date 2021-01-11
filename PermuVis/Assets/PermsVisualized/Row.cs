@@ -10,6 +10,11 @@ namespace Roundbeargames
         public List<int> listInts = new List<int>();
         public Selector selector;
 
+        public Row()
+        {
+            selector = new Selector(this);
+        }
+
         public Row(int itemCount)
         {
             for (int i = 0; i < itemCount; i++)

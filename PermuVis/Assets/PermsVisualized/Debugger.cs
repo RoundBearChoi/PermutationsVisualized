@@ -14,7 +14,7 @@ namespace Roundbeargames
             {
                 if (debuggerObj == null)
                 {
-                    debuggerObj = UnityEngine.MonoBehaviour.FindObjectOfType<DebuggerObj>();
+                    debuggerObj = MonoBehaviour.FindObjectOfType<DebuggerObj>();
                 }
 
                 return debuggerObj;
