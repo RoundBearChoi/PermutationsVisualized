@@ -10,33 +10,44 @@ namespace Roundbeargames
         [SerializeField]
         public RectTransform CenterAnchor;
         public List<RectTransform> RowUIElements;
+        public GameObject RowPrefab;
         public GameObject SelectorPrefab;
         public GameObject VerticalLinePrefab;
         public GameObject FixerPrefab;
+        public RectTransform rowAnchor;
 
         [Header("---Debug---")]
         [SerializeField]
-        private List<Row> Rows;
+        public GameLogic gameLogic;
 
-        private void Start()
+        public void SetupPermMachine(GameLogic logic)
         {
-            SetupPermMachine();
-        }
+            gameLogic = logic;
 
-        private void SetupPermMachine()
-        {
-            Rows.Clear();
-
-            foreach (RectTransform t in RowUIElements)
+            for (int nRows = 0; nRows < gameLogic.ROW_COUNT; nRows++)
             {
-                Row r = new Row();
-                Rows.Add(r);
+                RectTransform rect = CreateRowUI(nRows);
+                Row r = gameLogic.GetItem(nRows);
 
-                AttachSelector(t);
-                AttachVerticalLines(t, r.listInts.Count);
+                for (int i = 0; i < r.listInts.Count ; i++)
+                {
+                    AttachSelector(rect);
+                    AttachVerticalLines(rect, r.listInts.Count);
+                }
             }
 
             AttachFixer(CenterAnchor);
+        }
+
+        private RectTransform CreateRowUI(int rowCount)
+        {
+            GameObject row = Instantiate(RowPrefab);
+            Vector2 localP = new Vector2(0f, 0f);
+            float yOffset = -120f;
+            localP.y = yOffset * rowCount;
+            AttachToRect(row, rowAnchor, localP);
+
+            return row.GetComponent<RectTransform>();
         }
 
         private void AttachSelector(RectTransform rowRectTransform)
