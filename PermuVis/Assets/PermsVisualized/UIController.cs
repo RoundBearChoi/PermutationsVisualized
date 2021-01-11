@@ -43,7 +43,7 @@ namespace Roundbeargames
         {
             GameObject row = Instantiate(RowPrefab);
             Vector2 localP = new Vector2(0f, 0f);
-            float yOffset = -120f;
+            float yOffset = -110f;
             localP.y = yOffset * rowCount;
             AttachToRect(row, rowAnchor, localP);
 

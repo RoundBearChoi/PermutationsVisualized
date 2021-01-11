@@ -37,5 +37,10 @@ namespace Roundbeargames
         {
             index++;
         }
+
+        public void SetIndex(int n)
+        {
+            index = n;
+        }
     }
 }
