@@ -11,6 +11,7 @@ namespace Roundbeargames
         public RectTransform CenterAnchor;
         public List<RectTransform> RowUIElements;
         public GameObject SelectorPrefab;
+        public GameObject VerticalLinePrefab;
         public GameObject FixerPrefab;
 
         [Header("---Debug---")]
@@ -32,28 +33,42 @@ namespace Roundbeargames
                 Rows.Add(r);
 
                 AttachSelector(t);
-                AttachFixer(CenterAnchor);
+                AttachVerticalLines(t, r.listInts.Count);
             }
+
+            AttachFixer(CenterAnchor);
         }
 
         private void AttachSelector(RectTransform rowRectTransform)
         {
             GameObject selectorObj = Instantiate(SelectorPrefab);
+            AttachToRect(selectorObj, rowRectTransform, Vector2.zero);
+        }
 
-            selectorObj.transform.parent = rowRectTransform.transform;
-            RectTransform selectorRectTransform = selectorObj.GetComponent<RectTransform>();
-            selectorRectTransform.position = Vector3.zero;
-            selectorRectTransform.anchoredPosition = Vector2.zero;
+        private void AttachVerticalLines(RectTransform rectTransform, int nCount)
+        {
+            for (int i = 0; i <= nCount; i++)
+            {
+                float leftside = -(float)rectTransform.rect.width / 2f;
+                float offset = (float)rectTransform.rect.width / (float)nCount;
+                Vector2 localPos = new Vector2(leftside + (offset * i), 0);
+
+                GameObject vertObj = Instantiate(VerticalLinePrefab);
+                AttachToRect(vertObj, rectTransform, localPos);
+            }
         }
 
         private void AttachFixer(RectTransform centerRectTransform)
         {
             GameObject fixerObj = Instantiate(FixerPrefab);
+            AttachToRect(fixerObj, centerRectTransform, Vector2.zero);
+        }
 
-            fixerObj.transform.parent = centerRectTransform.transform;
-            RectTransform fixerRectTransform = fixerObj.GetComponent<RectTransform>();
-            fixerRectTransform.position = Vector3.zero;
-            fixerRectTransform.anchoredPosition = Vector2.zero;
+        private void AttachToRect(GameObject obj, RectTransform parentRect, Vector2 localPos)
+        {
+            obj.transform.parent = parentRect.transform;
+            RectTransform objRect = obj.GetComponent<RectTransform>();
+            objRect.anchoredPosition = localPos;
         }
     }
 }
