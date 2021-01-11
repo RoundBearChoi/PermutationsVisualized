@@ -7,16 +7,6 @@ namespace Roundbeargames
     public class PermMachine : MonoBehaviour
     {
         List<Row> rows = null;
-        int totalCombinations = 0;
-        UIController uiController = null;
-
-        public int TOTAL_COMBINATIONS
-        {
-            get
-            {
-                return totalCombinations;
-            }
-        }
 
         public bool MoveSelectors()
         {
@@ -40,10 +30,11 @@ namespace Roundbeargames
             return false;
         }
 
-        public void PrintAll(List<Row> targetRows, UIController targetUI)
+        public void PrintAll(List<Row> targetRows)
         {
             rows = targetRows;
-            uiController = targetUI;
+            ResultManager.totalCombinations = 0;
+
             StartCoroutine(_DelayedUpdate());
         }
 
@@ -66,7 +57,7 @@ namespace Roundbeargames
                 }
             }
 
-            Debugger.Log("total combinations: " + totalCombinations);
+            Debugger.Log("total combinations: " + ResultManager.totalCombinations);
         }
 
         IEnumerator PrintCombinations()
@@ -82,12 +73,11 @@ namespace Roundbeargames
                 }
 
                 Debugger.Log(combination);
-                totalCombinations++;
+                ResultManager.totalCombinations++;
 
                 Row bottomRow = rows[rows.Count - 1];
 
-                // delay visualization
-                yield return new WaitForSeconds(uiController.UPDATE_DELAY);
+                yield return new WaitForSeconds(UpdateDelayManager.delay);
 
                 // can one selector move right? (bottom)
                 if (bottomRow.SelectorCanMoveRight())

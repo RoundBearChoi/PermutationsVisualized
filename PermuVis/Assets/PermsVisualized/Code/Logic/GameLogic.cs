@@ -10,14 +10,6 @@ namespace Roundbeargames
         [SerializeField] List<Row> RowsList = new List<Row>();
         [SerializeField] PermMachine permMachine = null;
 
-        public PermMachine PERM_MACHINE
-        {
-            get
-            {
-                return permMachine;
-            }
-        }
-
         void Start()
         {
             Run();
@@ -58,7 +50,7 @@ namespace Roundbeargames
             obj.name = typeof(PermMachine).Name;
             permMachine = obj.AddComponent(typeof(PermMachine)) as PermMachine;
 
-            permMachine.PrintAll(RowsList, uiController);
+            permMachine.PrintAll(RowsList);
         }
 
         void CreateRow(int nItemCount)

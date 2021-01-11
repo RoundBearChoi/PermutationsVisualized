@@ -49,6 +49,8 @@ namespace Roundbeargames
 
         private void Update()
         {
+            UpdateDelayManager.delay = UpdateDelay;
+
             if (gameLogic != null)
             {
                 for (int i = 0; i < gameLogic.TOTAL_ROWS; i++)
@@ -60,7 +62,7 @@ namespace Roundbeargames
                         float localX = GetLocalUIXPos(RowUIList[i], totalItems, selection);
 
                         SelectorUIList[i].anchoredPosition = new Vector2(localX, 0f);
-                        textResult.text = gameLogic.PERM_MACHINE.TOTAL_COMBINATIONS.ToString();
+                        textResult.text = ResultManager.totalCombinations.ToString();
                     }
                 }
             }
