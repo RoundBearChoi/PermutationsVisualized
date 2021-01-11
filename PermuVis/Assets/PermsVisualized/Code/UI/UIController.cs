@@ -64,7 +64,7 @@ namespace Roundbeargames
             {
                 RectTransform rect = CreateRowUI(nRows);
 
-                AttachSelector(nRows, rect);
+                AttachSelector(rect);
 
                 Row r = gameLogic.GetRow(nRows);
                 AttachVerticalLines(rect, r.listInts.Count);
@@ -84,7 +84,7 @@ namespace Roundbeargames
             return row.GetComponent<RectTransform>();
         }
 
-        private void AttachSelector(int index, RectTransform rowRectTransform)
+        private void AttachSelector(RectTransform rowRectTransform)
         {
             GameObject selectorObj = Instantiate(SelectorPrefab);
             AttachToRect(selectorObj, rowRectTransform, Vector2.zero);
