@@ -114,13 +114,9 @@ namespace Roundbeargames
 
         public void OnClickGo()
         {
+            ModeManager.mode = GameModes.NORMAL;
             Debugger.Log("---go!---");
-
-            if (gameLogic == null)
-            {
-                gameLogic = FindObjectOfType<GameLogic>();
-            }
-
+            FindGameLogic();
             Cleanup();
 
             int itemCount = int.Parse(itemField.text);
@@ -128,7 +124,30 @@ namespace Roundbeargames
 
             gameLogic.SetupMachine(itemCount, rowCount);
             SetupGraphics();
+
             gameLogic.StartMachine();
+        }
+
+        public void OnClickManualMode()
+        {
+            ModeManager.mode = GameModes.MANUAL_CLICK;
+            Debugger.Log("---manual mode---");
+            FindGameLogic();
+            Cleanup();
+
+            int itemCount = int.Parse(itemField.text);
+            int rowCount = int.Parse(rowField.text);
+
+            gameLogic.SetupMachine(itemCount, rowCount);
+            SetupGraphics();
+        }
+
+        void FindGameLogic()
+        {
+            if (gameLogic == null)
+            {
+                gameLogic = FindObjectOfType<GameLogic>();
+            }
         }
 
         void Cleanup()
@@ -140,6 +159,8 @@ namespace Roundbeargames
 
             RowUIList.Clear();
             SelectorUIList.Clear();
+
+            ResultManager.totalCombinations = 0;
         }
     }
 }
