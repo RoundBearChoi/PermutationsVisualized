@@ -7,16 +7,18 @@ namespace Roundbeargames
     public class UIController : MonoBehaviour
     {
         [Header("---Setup---")]
-        public GameObject RowPrefab;
-        public GameObject SelectorPrefab;
-        public GameObject VerticalLinePrefab;
-        public RectTransform rowAnchor;
-        public UnityEngine.UI.Text textResult;
-                
+        [SerializeField] GameObject RowPrefab;
+        [SerializeField] GameObject SelectorPrefab;
+        [SerializeField] GameObject VerticalLinePrefab;
+        [SerializeField] RectTransform rowAnchor;
+        [SerializeField] UnityEngine.UI.Text textResult;
+        [SerializeField] UnityEngine.UI.Slider delaySlider;
+
         [SerializeField] int ItemsPerRow = 0;
         [SerializeField] int TotalRows = 0;
         [SerializeField] float RowIndent = 0f;
-        [SerializeField] [Range(0.01f, 1f)] float UpdateDelay = 0f;
+        //[SerializeField] [Range(0.01f, 1f)] float UpdateDelay = 0f;
+        
 
         [Header("---Debug---")]
         [SerializeField] GameLogic gameLogic;
@@ -25,7 +27,7 @@ namespace Roundbeargames
 
         private void Update()
         {
-            UpdateDelayManager.delay = UpdateDelay;
+            UpdateDelayManager.delay = delaySlider.value;
 
             if (gameLogic != null)
             {
