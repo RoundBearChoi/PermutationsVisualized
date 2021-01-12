@@ -678,7 +678,7 @@ MonoBehaviour:
   ItemsPerRow: 5
   TotalRows: 5
   RowIndent: 130
-  UpdateDelay: 0.1
+  UpdateDelay: 0.01
   gameLogic: {fileID: 0}
   RowUIList: []
   SelectorUIList: []
