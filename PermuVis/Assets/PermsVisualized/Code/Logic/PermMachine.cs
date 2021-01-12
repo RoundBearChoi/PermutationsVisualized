@@ -42,7 +42,7 @@ namespace Roundbeargames
         {
             while (true)
             {
-                yield return PrintCombinations();
+                yield return PrintCombination();
 
                 // can selector move?
                 // if yes: move selector and stay in loop
@@ -60,19 +60,19 @@ namespace Roundbeargames
             Debug.Log("total combinations: " + ResultManager.totalCombinations);
         }
 
-        IEnumerator PrintCombinations()
+        IEnumerator PrintCombination()
         {
             while (true)
             {
-                string combination = string.Empty;
+                ResultManager.currentCombination = string.Empty;
 
                 // print each item selected
                 for (int i = 0; i < rows.Count; i++)
                 {
-                    combination += rows[i].selector.VALUE + " ";
+                    ResultManager.currentCombination += rows[i].selector.VALUE + "     ";
                 }
 
-                Debug.Log(combination);
+                Debug.Log(ResultManager.currentCombination);
                 ResultManager.totalCombinations++;
 
                 Row bottomRow = rows[rows.Count - 1];

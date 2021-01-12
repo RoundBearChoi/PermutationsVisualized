@@ -11,7 +11,8 @@ namespace Roundbeargames
         [SerializeField] GameObject SelectorPrefab;
         [SerializeField] GameObject VerticalLinePrefab;
         [SerializeField] RectTransform rowAnchor;
-        [SerializeField] UnityEngine.UI.Text textResult;
+        [SerializeField] UnityEngine.UI.Text textCurrentCombination;
+        [SerializeField] UnityEngine.UI.Text textTotalCombinations;
         [SerializeField] UnityEngine.UI.InputField itemField;
         [SerializeField] UnityEngine.UI.InputField rowField;
         [SerializeField] UnityEngine.UI.Slider delaySlider;
@@ -40,10 +41,12 @@ namespace Roundbeargames
                             int selection = gameLogic.GetRow(i).selector.INDEX;
                             PlaceSelectorUI(i, selection);
 
-                            textResult.text = ResultManager.totalCombinations.ToString();
+                            textTotalCombinations.text = ResultManager.totalCombinations.ToString();
                         }
                     }
                 }
+
+                textCurrentCombination.text = ResultManager.currentCombination;
 
                 yield return new WaitForEndOfFrame();
             }
@@ -191,7 +194,7 @@ namespace Roundbeargames
             SelectorUIList.Clear();
 
             ResultManager.totalCombinations = 0;
-            textResult.text = "0";
+            textTotalCombinations.text = "0";
 
             if (UpdateRoutine != null)
             {
