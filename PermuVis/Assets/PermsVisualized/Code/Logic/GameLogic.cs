@@ -6,23 +6,24 @@ namespace Roundbeargames
 {
     public class GameLogic : MonoBehaviour
     {
-        [Header("Debug")]
+        [Header("---Debug---")]
         [SerializeField] List<Row> RowsList = new List<Row>();
         [SerializeField] PermMachine permMachine = null;
 
-        void Start()
+        public void SetupMachine(int itemsPerRow, int totalRows)
         {
-            Run();
-        }
+            if (permMachine != null)
+            {
+                Destroy(permMachine);
+            }
 
-        public void Run()
-        {
-            UIController uiController = FindObjectOfType<UIController>();
+            permMachine = CreateMachine();
 
             // rows auto setup
-            for (int i = 0; i < uiController.TOTAL_ROWS; i++)
+            for (int i = 0; i < totalRows; i++)
             {
-                CreateRow(uiController.ITEMS_PER_ROW);
+                Row r = CreateRow(itemsPerRow);
+                RowsList.Add(r);
             }
 
             // rows manual setup
@@ -43,17 +44,20 @@ namespace Roundbeargames
             RowsList.Add(r1);
             RowsList.Add(r2);
             */
+        }
 
-            uiController.SetupGraphics(this);
+        public PermMachine CreateMachine()
+        {
+            UIController uiController = FindObjectOfType<UIController>();
 
             GameObject obj = new GameObject();
             obj.name = typeof(PermMachine).Name;
-            permMachine = obj.AddComponent(typeof(PermMachine)) as PermMachine;
+            PermMachine machine = obj.AddComponent(typeof(PermMachine)) as PermMachine;
 
-            permMachine.PrintAll(RowsList);
+            return machine;
         }
 
-        void CreateRow(int nItemCount)
+        Row CreateRow(int nItemCount)
         {
             Row row = new Row();
 
@@ -62,7 +66,12 @@ namespace Roundbeargames
                 row.listInts.Add(i);
             }
 
-            RowsList.Add(row);
+            return row;
+        }
+
+        public void StartMachine()
+        {
+            permMachine.PrintAll(RowsList);
         }
 
         public Row GetRow(int index)

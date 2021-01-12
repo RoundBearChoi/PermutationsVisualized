@@ -16,36 +16,12 @@ namespace Roundbeargames
         [SerializeField] int ItemsPerRow = 0;
         [SerializeField] int TotalRows = 0;
         [SerializeField] float RowIndent = 0f;
-        [SerializeField] [Range(0f, 1f)] float UpdateDelay = 0f;
+        [SerializeField] [Range(0.01f, 1f)] float UpdateDelay = 0f;
 
         [Header("---Debug---")]
         [SerializeField] GameLogic gameLogic;
         [SerializeField] List<RectTransform> RowUIList = new List<RectTransform>();
         [SerializeField] List<RectTransform> SelectorUIList = new List<RectTransform>();
-
-        public int TOTAL_ROWS
-        {
-            get
-            {
-                return TotalRows;
-            }
-        }
-
-        public int ITEMS_PER_ROW
-        {
-            get
-            {
-                return ItemsPerRow;
-            }
-        }
-
-        public float UPDATE_DELAY
-        {
-            get
-            {
-                return UpdateDelay;
-            }
-        }
 
         private void Update()
         {
@@ -68,9 +44,8 @@ namespace Roundbeargames
             }
         }
 
-        public void SetupGraphics(GameLogic logic)
+        void SetupGraphics()
         {
-            gameLogic = logic;
             SelectorUIList.Clear();
 
             for (int nRows = 0; nRows < gameLogic.TOTAL_ROWS; nRows++)
@@ -135,6 +110,20 @@ namespace Roundbeargames
             obj.transform.parent = parentRect.transform;
             RectTransform objRect = obj.GetComponent<RectTransform>();
             objRect.anchoredPosition = localPos;
+        }
+
+        public void OnClickGo()
+        {
+            Debugger.Log("---go!---");
+
+            if (gameLogic == null)
+            {
+                gameLogic = FindObjectOfType<GameLogic>();
+            }
+            
+            gameLogic.SetupMachine(ItemsPerRow, TotalRows);
+            SetupGraphics();
+            gameLogic.StartMachine();
         }
     }
 }
