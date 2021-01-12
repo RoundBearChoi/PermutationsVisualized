@@ -10,6 +10,14 @@ namespace Roundbeargames
         [SerializeField] List<Row> RowsList = new List<Row>();
         [SerializeField] PermMachine permMachine = null;
 
+        public int TOTAL_ROWS
+        {
+            get
+            {
+                return RowsList.Count;
+            }
+        }
+
         void Cleanup()
         {
             if (permMachine != null)
@@ -51,6 +59,8 @@ namespace Roundbeargames
             RowsList.Add(r1);
             RowsList.Add(r2);
             */
+
+            permMachine.SetTargetRows(RowsList);
         }
 
         public PermMachine CreateMachine()
@@ -76,7 +86,7 @@ namespace Roundbeargames
 
         public void StartMachine()
         {
-            permMachine.PrintAll(RowsList);
+            permMachine.PrintAll();
         }
 
         public Row GetRow(int index)
@@ -84,11 +94,11 @@ namespace Roundbeargames
             return RowsList[index];
         }
 
-        public int TOTAL_ROWS
+        public void UpdateResult()
         {
-            get
+            if (permMachine != null)
             {
-                return RowsList.Count;
+                permMachine.UpdateResult();
             }
         }
     }

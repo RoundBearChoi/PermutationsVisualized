@@ -7,6 +7,7 @@ namespace Roundbeargames
 {
     public class VerticalLineUI : MonoBehaviour, IPointerClickHandler
     {
+        GameLogic gameLogic = null;
         UIController mUIController = null;
         int mRowID = 0;
         int mX = 0;
@@ -22,7 +23,15 @@ namespace Roundbeargames
         {
             Debug.Log("vertical line clicked: " + this.gameObject.name);
 
-            mUIController.PlaceSelectorUI(mRowID, mX);
+            mUIController.SetSelector(mRowID, mX);
+
+            if (gameLogic == null)
+            {
+                gameLogic = FindObjectOfType<GameLogic>();
+            }
+
+            gameLogic.UpdateResult();
+            mUIController.PrintUpdatedResult();
         }
     }
 }
