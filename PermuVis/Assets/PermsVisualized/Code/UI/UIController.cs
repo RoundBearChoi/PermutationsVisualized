@@ -175,6 +175,11 @@ namespace Roundbeargames
             }
         }
 
+        public void OnClickQuit()
+        {
+            Application.Quit();
+        }
+
         void Cleanup()
         {
             foreach (RectTransform rect in RowUIList)
