@@ -120,10 +120,23 @@ namespace Roundbeargames
             {
                 gameLogic = FindObjectOfType<GameLogic>();
             }
+
+            Cleanup();
             
             gameLogic.SetupMachine(ItemsPerRow, TotalRows);
             SetupGraphics();
             gameLogic.StartMachine();
+        }
+
+        void Cleanup()
+        {
+            foreach (RectTransform rect in RowUIList)
+            {
+                Destroy(rect.gameObject);
+            }
+
+            RowUIList.Clear();
+            SelectorUIList.Clear();
         }
     }
 }

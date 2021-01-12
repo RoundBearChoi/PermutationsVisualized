@@ -10,16 +10,23 @@ namespace Roundbeargames
         [SerializeField] List<Row> RowsList = new List<Row>();
         [SerializeField] PermMachine permMachine = null;
 
-        public void SetupMachine(int itemsPerRow, int totalRows)
+        void Cleanup()
         {
             if (permMachine != null)
             {
-                Destroy(permMachine);
+                Destroy(permMachine.gameObject);
             }
+
+            RowsList.Clear();
+        }
+
+        public void SetupMachine(int itemsPerRow, int totalRows)
+        {
+            Cleanup();
 
             permMachine = CreateMachine();
 
-            // rows auto setup
+            // rows setup
             for (int i = 0; i < totalRows; i++)
             {
                 Row r = CreateRow(itemsPerRow);
@@ -48,8 +55,6 @@ namespace Roundbeargames
 
         public PermMachine CreateMachine()
         {
-            UIController uiController = FindObjectOfType<UIController>();
-
             GameObject obj = new GameObject();
             obj.name = typeof(PermMachine).Name;
             PermMachine machine = obj.AddComponent(typeof(PermMachine)) as PermMachine;
