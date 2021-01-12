@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 1758534438}
   - component: {fileID: 1758534437}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: InputField - rowCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 1
+  m_Text: 5
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1320,7 +1320,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 5
 --- !u!1 &2085679763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,7 +1485,7 @@ GameObject:
   - component: {fileID: 84197086100868712}
   - component: {fileID: 3890057283795022324}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: InputField - itemCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1610,7 +1610,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 1
+  m_Text: 4
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1812,9 +1812,9 @@ MonoBehaviour:
   VerticalLinePrefab: {fileID: 4592789562639958945, guid: f6e662bc667b8af43b723e6f3752d27b, type: 3}
   rowAnchor: {fileID: 1951939228}
   textResult: {fileID: 903932152}
+  itemField: {fileID: 3890057283795022324}
+  rowField: {fileID: 1758534437}
   delaySlider: {fileID: 975612872}
-  ItemsPerRow: 5
-  TotalRows: 5
   RowIndent: 130
   gameLogic: {fileID: 0}
   RowUIList: []
@@ -1976,7 +1976,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 4
 --- !u!1 &7264381276915831960
 GameObject:
   m_ObjectHideFlags: 0

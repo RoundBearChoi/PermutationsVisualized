@@ -12,12 +12,10 @@ namespace Roundbeargames
         [SerializeField] GameObject VerticalLinePrefab;
         [SerializeField] RectTransform rowAnchor;
         [SerializeField] UnityEngine.UI.Text textResult;
+        [SerializeField] UnityEngine.UI.InputField itemField;
+        [SerializeField] UnityEngine.UI.InputField rowField;
         [SerializeField] UnityEngine.UI.Slider delaySlider;
-
-        [SerializeField] int ItemsPerRow = 0;
-        [SerializeField] int TotalRows = 0;
         [SerializeField] float RowIndent = 0f;
-        //[SerializeField] [Range(0.01f, 1f)] float UpdateDelay = 0f;
         
 
         [Header("---Debug---")]
@@ -124,8 +122,11 @@ namespace Roundbeargames
             }
 
             Cleanup();
-            
-            gameLogic.SetupMachine(ItemsPerRow, TotalRows);
+
+            int itemCount = int.Parse(itemField.text);
+            int rowCount = int.Parse(rowField.text);
+
+            gameLogic.SetupMachine(itemCount, rowCount);
             SetupGraphics();
             gameLogic.StartMachine();
         }
