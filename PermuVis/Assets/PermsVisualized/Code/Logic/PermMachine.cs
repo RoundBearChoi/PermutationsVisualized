@@ -57,7 +57,7 @@ namespace Roundbeargames
                 }
             }
 
-            Debugger.Log("total combinations: " + ResultManager.totalCombinations);
+            Debug.Log("total combinations: " + ResultManager.totalCombinations);
         }
 
         IEnumerator PrintCombinations()
@@ -72,7 +72,7 @@ namespace Roundbeargames
                     combination += rows[i].selector.VALUE + " ";
                 }
 
-                Debugger.Log(combination);
+                Debug.Log(combination);
                 ResultManager.totalCombinations++;
 
                 Row bottomRow = rows[rows.Count - 1];
@@ -87,7 +87,7 @@ namespace Roundbeargames
                 }
                 else
                 {
-                    Debugger.Log("---");
+                    Debug.Log("---");
                     break;
                 }
             }

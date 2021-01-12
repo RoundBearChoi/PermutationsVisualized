@@ -23,39 +23,52 @@ namespace Roundbeargames
         [SerializeField] List<RectTransform> RowUIList = new List<RectTransform>();
         [SerializeField] List<RectTransform> SelectorUIList = new List<RectTransform>();
 
-        private void Update()
+        Coroutine UpdateRoutine = null;
+
+        IEnumerator _UpdateUI()
         {
-            UpdateDelayManager.delay = delaySlider.value;
-
-            if (gameLogic != null)
+            while(true)
             {
-                for (int i = 0; i < gameLogic.TOTAL_ROWS; i++)
-                {
-                    if (i < SelectorUIList.Count && i < RowUIList.Count)
-                    {
-                        int totalItems = gameLogic.GetRow(i).listInts.Count;
-                        int selection = gameLogic.GetRow(i).selector.INDEX;
-                        float localX = GetLocalUIXPos(RowUIList[i], totalItems, selection);
+                UpdateDelayManager.delay = delaySlider.value;
 
-                        SelectorUIList[i].anchoredPosition = new Vector2(localX, 0f);
-                        textResult.text = ResultManager.totalCombinations.ToString();
+                if (gameLogic != null && ModeManager.mode == GameModes.NORMAL)
+                {
+                    for (int i = 0; i < gameLogic.TOTAL_ROWS; i++)
+                    {
+                        if (i < SelectorUIList.Count && i < RowUIList.Count)
+                        {
+                            int selection = gameLogic.GetRow(i).selector.INDEX;
+                            PlaceSelectorUI(i, selection);
+
+                            textResult.text = ResultManager.totalCombinations.ToString();
+                        }
                     }
                 }
+
+                yield return new WaitForEndOfFrame();
             }
+        }
+
+        public void PlaceSelectorUI(int rowIndex, int x)
+        {
+            int totalItems = gameLogic.GetRow(rowIndex).listInts.Count;
+            float localX = GetLocalUIXPos(RowUIList[rowIndex], totalItems, x);
+
+            SelectorUIList[rowIndex].anchoredPosition = new Vector2(localX, 0f);
         }
 
         void SetupGraphics()
         {
             SelectorUIList.Clear();
 
-            for (int nRows = 0; nRows < gameLogic.TOTAL_ROWS; nRows++)
+            for (int rowID = 0; rowID < gameLogic.TOTAL_ROWS; rowID++)
             {
-                RectTransform rect = CreateRowUI(nRows);
+                RectTransform rect = CreateRowUI(rowID);
 
                 AttachSelector(rect);
 
-                Row r = gameLogic.GetRow(nRows);
-                AttachVerticalLines(rect, r.listInts.Count);
+                Row r = gameLogic.GetRow(rowID);
+                AttachVerticalLines(rect, r.listInts.Count, rowID);
             }
         }
 
@@ -80,7 +93,7 @@ namespace Roundbeargames
             SelectorUIList.Add(selectorObj.GetComponent<RectTransform>());
         }
 
-        private void AttachVerticalLines(RectTransform rectTransform, int nCount)
+        private void AttachVerticalLines(RectTransform rectTransform, int nCount, int rowID)
         {
             for (int i = 0; i < nCount; i++)
             {
@@ -88,6 +101,10 @@ namespace Roundbeargames
                 Vector2 localPos = new Vector2(localX, 0);
 
                 GameObject vertObj = Instantiate(VerticalLinePrefab);
+
+                VerticalLineUI lineUI = vertObj.GetComponent<VerticalLineUI>();
+                lineUI.Setup(this, i, rowID);
+
                 AttachToRect(vertObj, rectTransform, localPos);
             }
         }
@@ -112,10 +129,18 @@ namespace Roundbeargames
             objRect.anchoredPosition = localPos;
         }
 
+        void FindGameLogic()
+        {
+            if (gameLogic == null)
+            {
+                gameLogic = FindObjectOfType<GameLogic>();
+            }
+        }
+
         public void OnClickGo()
         {
             ModeManager.mode = GameModes.NORMAL;
-            Debugger.Log("---go!---");
+            Debug.Log("---go!---");
             FindGameLogic();
             Cleanup();
 
@@ -126,12 +151,14 @@ namespace Roundbeargames
             SetupGraphics();
 
             gameLogic.StartMachine();
+
+            UpdateRoutine = StartCoroutine(_UpdateUI());
         }
 
         public void OnClickManualMode()
         {
             ModeManager.mode = GameModes.MANUAL_CLICK;
-            Debugger.Log("---manual mode---");
+            Debug.Log("---manual mode---");
             FindGameLogic();
             Cleanup();
 
@@ -140,13 +167,11 @@ namespace Roundbeargames
 
             gameLogic.SetupMachine(itemCount, rowCount);
             SetupGraphics();
-        }
 
-        void FindGameLogic()
-        {
-            if (gameLogic == null)
+            // place all selectors back to beginning
+            for (int i = 0; i < gameLogic.TOTAL_ROWS; i++)
             {
-                gameLogic = FindObjectOfType<GameLogic>();
+                PlaceSelectorUI(i, 0);
             }
         }
 
@@ -161,6 +186,12 @@ namespace Roundbeargames
             SelectorUIList.Clear();
 
             ResultManager.totalCombinations = 0;
+            textResult.text = "0";
+
+            if (UpdateRoutine != null)
+            {
+                StopCoroutine(UpdateRoutine);
+            }
         }
     }
 }
