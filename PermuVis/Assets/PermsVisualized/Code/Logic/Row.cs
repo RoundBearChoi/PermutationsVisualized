@@ -14,16 +14,6 @@ namespace Roundbeargames
             selector = new Selector(this);
         }
 
-        public Row(int itemCount)
-        {
-            for (int i = 0; i < itemCount; i++)
-            {
-                listInts.Add(i);
-            }
-
-            selector = new Selector(this);
-        }
-
         public bool SelectorCanMoveRight()
         {
             // selector index can be increased by 1

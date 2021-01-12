@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Roundbeargames
 {
-    [System.Serializable]
     public class Selector
     {
         private Row mOwner;
