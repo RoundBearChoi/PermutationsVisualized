@@ -21,17 +21,20 @@ namespace Roundbeargames
 
         public void OnPointerClick(PointerEventData pointerEventData)
         {
-            Debug.Log("vertical line clicked: " + this.gameObject.name);
-
-            mUIController.SetSelector(mRowID, mX);
-
-            if (gameLogic == null)
+            if (ModeManager.mode == GameModes.MANUAL_CLICK)
             {
-                gameLogic = FindObjectOfType<GameLogic>();
-            }
+                Debug.Log("vertical line clicked: " + this.gameObject.name);
 
-            gameLogic.UpdateResult();
-            mUIController.PrintUpdatedResult();
+                mUIController.SetSelector(mRowID, mX);
+
+                if (gameLogic == null)
+                {
+                    gameLogic = FindObjectOfType<GameLogic>();
+                }
+
+                gameLogic.UpdateResult();
+                mUIController.PrintUpdatedResult();
+            }
         }
     }
 }
