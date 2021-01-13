@@ -42,6 +42,7 @@ namespace Roundbeargames
             }
 
             // rows manual setup
+            // https://www.geeksforgeeks.org/combinations-from-n-arrays-picking-one-element-from-each-array/
             /*
             Row r0 = new Row();
             r0.listInts.Add(1);
@@ -98,7 +99,7 @@ namespace Roundbeargames
         {
             if (permMachine != null)
             {
-                permMachine.UpdateResult();
+                permMachine.PrintCombination();
             }
         }
     }

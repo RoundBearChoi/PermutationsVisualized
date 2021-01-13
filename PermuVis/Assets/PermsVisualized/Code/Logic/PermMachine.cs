@@ -12,7 +12,9 @@ namespace Roundbeargames
         {
             while (true)
             {
-                yield return PrintCombination();
+                PrintCombination();
+
+                yield return new WaitForSeconds(UpdateDelayManager.delay);
 
                 if (MoveSelector())
                 {
@@ -49,45 +51,21 @@ namespace Roundbeargames
             return false;
         }
 
-        IEnumerator PrintCombination()
-        {
-            while (true)
-            {
-                UpdateResult();
-
-                yield return new WaitForSeconds(UpdateDelayManager.delay);
-
-                Row bottomRow = rows[rows.Count - 1];
-
-                // can one selector move right? (bottom)
-                if (bottomRow.SelectorCanMoveRight())
-                {
-                    // move one selector and repeat
-                    bottomRow.selector.MoveIndexRight();
-                }
-                else
-                {
-                    Debug.Log("---");
-                    break;
-                }
-            }
-        }
-
         public void SetTargetRows(List<Row> targetRows)
         {
             rows = targetRows;
         }
 
-        public void UpdateResult()
+        public void PrintCombination()
         {
             ResultManager.currentCombination = string.Empty;
 
-            // print each item selected
             for (int i = 0; i < rows.Count; i++)
             {
                 ResultManager.currentCombination += rows[i].selector.VALUE + "     ";
             }
 
+            // print one combination
             Debug.Log(ResultManager.currentCombination);
 
             if (ModeManager.mode == GameModes.NORMAL)
