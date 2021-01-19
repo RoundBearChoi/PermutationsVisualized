@@ -18,7 +18,6 @@ namespace Roundbeargames
         [SerializeField] UnityEngine.UI.Slider delaySlider;
         [SerializeField] float RowIndent = 0f;
         
-
         [Header("---Debug---")]
         [SerializeField] GameLogic gameLogic;
         [SerializeField] List<RectTransform> RowUIList = new List<RectTransform>();
